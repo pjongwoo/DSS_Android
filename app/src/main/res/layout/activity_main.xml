@@ -34,6 +34,14 @@
             android:layout_height="wrap_content"
             android:text="약국검색"/>
 
+
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/bt_tab3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="로그인"/>
+
     </LinearLayout>
 
 </RelativeLayout>

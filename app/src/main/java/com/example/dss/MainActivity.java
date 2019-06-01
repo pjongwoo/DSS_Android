@@ -1,23 +1,20 @@
 package com.example.dss;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
+
 
 public class MainActivity extends AppCompatActivity  implements View.OnClickListener{
 
     private final int FRAGMENT1 = 1;
     private final int FRAGMENT2 = 2;
+    private final int FRAGMENT3= 3;
 
-    private Button bt_tab1, bt_tab2;
+    private Button bt_tab1, bt_tab2,bt_tab3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +24,14 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         // 위젯에 대한 참조
         bt_tab1 = (Button)findViewById(R.id.bt_tab1);
         bt_tab2 = (Button)findViewById(R.id.bt_tab2);
+        bt_tab3 = (Button)findViewById(R.id.bt_tab3);
 
         // 탭 버튼에 대한 리스너 연결
         bt_tab1.setOnClickListener(this);
         bt_tab2.setOnClickListener(this);
+        bt_tab3.setOnClickListener(this);
 
         callFragment(FRAGMENT1);
-
     }
 
     @Override
@@ -47,6 +45,10 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
             case R.id.bt_tab2 :
                 // '버튼2' 클릭 시 '프래그먼트2' 호출
                 callFragment(FRAGMENT2);
+                break;
+            case R.id.bt_tab3 :
+                // '버튼2' 클릭 시 '프래그먼트2' 호출
+                callFragment(FRAGMENT3);
                 break;
         }
     }
@@ -70,7 +72,14 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                 transaction.replace(R.id.fragment_container, fragment2);
                 transaction.commit();
                 break;
-        }
 
+            case 3:
+                // '프래그먼트3' 호출
+                fragment3 fragment3 = new fragment3();
+                transaction.replace(R.id.fragment_container, fragment3);
+                transaction.commit();
+
+                break;
+        }
     }
 }
