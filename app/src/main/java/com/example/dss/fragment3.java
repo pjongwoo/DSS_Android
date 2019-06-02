@@ -1,6 +1,8 @@
 package com.example.dss;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -31,32 +34,63 @@ import java.util.HashMap;
 public class fragment3 extends Fragment {
 
     ListViewStoreAdpter adapter;
-
+    EditText editText;
+    public static final int sub = 1001; /*다른 액티비티를 띄우기 위한 요청코드(상수)*/
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment3, null);
         ListView listview = (ListView) view.findViewById(R.id.listview);
+        editText = (EditText) view.findViewById(R.id.edit1);
 
         Button btn_server = (Button) view.findViewById(R.id.but1);
         btn_server.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("STATE", "LOG in SERVER");
+
+                String DrugStore = editText.getText().toString();
                 Activity root = getActivity(); //이 클래스가 프레그먼트이기 때문에 액티비티 정보를 얻는다.
-                Toast.makeText(root, "토스트 사용!", Toast.LENGTH_SHORT).show();
-                loadData2();
+                Toast.makeText(root, DrugStore, Toast.LENGTH_SHORT).show();
+                loadData2(DrugStore);
             }
         });
         adapter = new ListViewStoreAdpter (this.getActivity());
+        adapter.setTelClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ListViewStoreItem item = adapter.getItem((Integer) v.getTag());
+
+                String tel = "tel:" + item.getDutyTel1();
+//                startActivity(new Intent("android.intent.action.CALL", Uri.parse(tel)));
+                startActivity(new Intent("android.intent.action.DIAL", Uri.parse(tel)));
+            }
+        });
+        adapter.setMapClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ListViewStoreItem item = adapter.getItem((Integer) v.getTag());
+               // Uri gmmIntentUri = Uri.parse("geo:" + item.getWgs84Lat() + "," + item.getWgs84Lon());
+                //Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                //mapIntent.setPackage("com.google.android.apps.maps");
+                //startActivity(mapIntent);
+                Intent intent = new Intent(getActivity(),fragment4.class);
+
+                intent.putExtra("layx",item.getWgs84Lat());
+                intent.putExtra("layy",item.getWgs84Lon());
+                intent.putExtra("Seach",editText.getText().toString());
+                intent.putExtra("dutyName",item.getDutyName());
+                startActivity(intent);//액티비티 띄우기
+            }
+        });
+
         listview.setAdapter(adapter);
         return view;
     }
-    private void loadData2() {
+    private void loadData2(String Name) {
         AQuery aq = new AQuery(getActivity());
         HashMap<String, String> params = new HashMap<>();
         params.put("ServiceKey","231va86s8mqm2NVC5V5e3wWxtfRh5%2B1dBBBB2ZJb3E6DoeRzJPv3Kk19IYcZmBUyDez8LoibDglwKyWa3VC0Yg%3D%3D");
         params.put("Q0","서울");
-        params.put("Q1","구로");
+        params.put("Q1",Name);
         params.put("ORD","ADDR");
         params.put("numOfRows","10");
         params.put("_type","json");
@@ -67,7 +101,7 @@ public class fragment3 extends Fragment {
         aq.ajax(url, JSONObject.class, new AjaxCallback<JSONObject>() {
             @Override
             public void callback(String url, JSONObject resutl, AjaxStatus status) {
-
+                Log.i("url", url);
                 if (resutl != null) {
                     try {
                         JSONArray jar = resutl.optJSONObject("response").optJSONObject("body").optJSONObject("items").optJSONArray("item");

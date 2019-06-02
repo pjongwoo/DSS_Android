@@ -19,6 +19,9 @@ public class ListViewStoreAdpter extends BaseAdapter {
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<ListViewStoreItem> arItem;
 
+    private View.OnClickListener telClickListener;
+    private View.OnClickListener mapClickListener;
+
     private Context context;
     private AQuery aQuery;
 
@@ -30,6 +33,14 @@ public class ListViewStoreAdpter extends BaseAdapter {
 
     public ArrayList<ListViewStoreItem> getArItem() {
         return arItem;
+    }
+
+    public void setTelClickListener(View.OnClickListener telClickListener) {
+        this.telClickListener = telClickListener;
+    }
+
+    public void setMapClickListener(View.OnClickListener mapClickListener) {
+        this.mapClickListener = mapClickListener;
     }
 
 
@@ -63,6 +74,17 @@ public class ListViewStoreAdpter extends BaseAdapter {
         tvTitle.setText(item.getDutyName());
         tvAdress.setText(item.getDutyAddr());
         tvTel.setText(item.getDutyTel1());
+
+        btnTel.setTag(position);
+        if(telClickListener != null){
+            btnTel.setOnClickListener(telClickListener);
+        }
+
+        btnMap.setTag(position);
+        if(mapClickListener!= null){
+            btnMap.setOnClickListener(mapClickListener);
+        }
+
 
         return convertView;
     }

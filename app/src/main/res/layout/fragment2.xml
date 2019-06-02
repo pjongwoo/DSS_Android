@@ -1,16 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
+    tools:context=".MainActivity" >
 
-    <!-- Activity에서는 fragment로 구현해야되지만
-    Fragment로 구현하기위해서는 MapView를 사용해야함-->
-    <com.google.android.gms.maps.MapView
+    <fragment
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.google.android.gms.maps.MapFragment"
-        />
+        class="com.google.android.gms.maps.MapFragment" />
 
-</RelativeLayout>
+</LinearLayout>
