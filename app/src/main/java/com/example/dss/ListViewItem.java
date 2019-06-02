@@ -2,60 +2,32 @@ package com.example.dss;
 
 
 public class ListViewItem {
+    String itmNm;  //약명칭
+    String mnfEntpNm; //제조사
+    String gnlNmCd;
 
-    private String firstimage;
-    private String title;
-    private String address;
-    private String tel;
-    double mapx;
-    double mapy;
-
-    public String getFirstimage() {
-        return firstimage;
+    public String getItmNm() {
+        return itmNm;
     }
 
-    public void setFirstimage(String firstimage) {
-        this.firstimage = firstimage;
+    public void setItmNm(String itmNm) {
+        this.itmNm = itmNm;
     }
 
-    public String getTitle() {
-        return title;
+    public String getMnfEntpNm() {
+        return mnfEntpNm;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setMnfEntpNm(String mnfEntpNm) {
+        this.mnfEntpNm = mnfEntpNm;
     }
 
-    public String getAddress() {
-        return address;
+    public String getGnlNmCd() {
+        return gnlNmCd;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
-    public double getMapx() {
-        return mapx;
-    }
-
-    public void setMapx(double mapx) {
-        this.mapx = mapx;
-    }
-
-    public double getMapy() {
-        return mapy;
-    }
-
-    public void setMapy(double mapy) {
-        this.mapy = mapy;
+    public void setGnlNmCd(String gnlNmCd) {
+        this.gnlNmCd = gnlNmCd;
     }
 }
 

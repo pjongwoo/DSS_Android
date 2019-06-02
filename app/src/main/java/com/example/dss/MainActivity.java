@@ -1,11 +1,21 @@
 package com.example.dss;
-
 import android.os.Bundle;
-
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.androidquery.AQuery;
+import com.androidquery.callback.AjaxCallback;
+import com.androidquery.callback.AjaxStatus;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class MainActivity extends AppCompatActivity  implements View.OnClickListener{
@@ -15,6 +25,11 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
     private final int FRAGMENT3= 3;
 
     private Button bt_tab1, bt_tab2,bt_tab3;
+
+    private ListViewItem data;
+
+    ListViewAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,4 +97,5 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                 break;
         }
     }
+
 }

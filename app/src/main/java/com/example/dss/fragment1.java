@@ -1,6 +1,5 @@
 package com.example.dss;
 
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,55 +24,51 @@ import java.util.HashMap;
 
 public class fragment1 extends Fragment {
 
-    private ListViewItem data;
-    ListView listView = null;
+
     ListViewAdapter adapter;
+    EditText editText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment1, null);
         ListView listview = (ListView) view.findViewById(R.id.listview);
+        editText = (EditText) view.findViewById(R.id.edit1);
 
         Button btn_server = (Button) view.findViewById(R.id.but1);
+
         btn_server.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("STATE", "LOG in SERVER");
+
+                String Drug = editText.getText().toString();
                 Activity root = getActivity(); //이 클래스가 프레그먼트이기 때문에 액티비티 정보를 얻는다.
-                Toast.makeText(root, "토스트 사용!", Toast.LENGTH_SHORT).show();
-                loadData();
+                Toast.makeText(root, Drug, Toast.LENGTH_SHORT).show();
+                loadData(Drug);
             }
         });
-         adapter = new ListViewAdapter (this.getActivity());
+        adapter = new ListViewAdapter(this.getActivity());
         listview.setAdapter(adapter);
-        return view;
-    }
+        return  view;
 
-    private void loadData() {
+    }
+    private void loadData(String Drug) {
         AQuery aq = new AQuery(getActivity());
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("ServiceKey","WMoao2wlyH%2Fg8VDiX%2Bg4dmAimYFxy58FB7Qu%2FNbKl4wOGlNq%2FJGYs7dfK3x3FpKQK9zysPxgunNGdE4bsO15dA%3D%3D");
-        params.put("numOfRows","30");
+        params.put("ServiceKey","231va86s8mqm2NVC5V5e3wWxtfRh5%2B1dBBBB2ZJb3E6DoeRzJPv3Kk19IYcZmBUyDez8LoibDglwKyWa3VC0Yg%3D%3D");
+        params.put("numOfRows","10");
         params.put("pageNo","1");
-        params.put("MobileOS","ETC");
-        params.put("MobileApp","AppTest");
-        params.put("arrange","A");
-        params.put("listYN","Y");
-        params.put("areaCode","1");
-//        params.put("sigunguCode","1");
-        params.put("eventStartDate","20180101");
-//        params.put("eventStartDate","20170901");
-//        params.put("eventEndDate","");
+        params.put("itmNm",Drug);
         params.put("_type","json");
 
-        String url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchFestival";
+        String url = "http://apis.data.go.kr/B551182/dgamtCrtrInfoService/getDgamtList";
         url = addParams(url, params);
 
         aq.ajax(url, JSONObject.class, new AjaxCallback<JSONObject>() {
             @Override
             public void callback(String url, JSONObject resutl, AjaxStatus status) {
+                Log.i ("url",url);
                 if (resutl != null) {
                     //sucess
                     Log.i("test", resutl.toString());
@@ -85,12 +81,9 @@ public class fragment1 extends Fragment {
                             JSONObject jobj = jar.optJSONObject(i);
 
                             ListViewItem item = new ListViewItem();
-                            item.setTitle(jobj.optString("title"));
-                            item.setAddress(jobj.optString("addr1"));
-                            item.setFirstimage(jobj.optString("firstimage"));
-                            item.setMapx(jobj.optDouble("mapx"));
-                            item.setMapy(jobj.optDouble("mapy"));
-                            item.setTel(jobj.optString("tel"));
+                            item.setItmNm(jobj.optString("itmNm"));
+                            item.setMnfEntpNm(jobj.optString("mnfEntpNm"));
+                            item.setGnlNmCd(jobj.optString("GnlNmCd"));
 
                             arItem.add(item);
                         }
@@ -111,16 +104,15 @@ public class fragment1 extends Fragment {
         }.timeout(20000));
     }
 
-    private String addParams(String url, HashMap<String, String> mapParam) {
-        StringBuilder stringBuilder = new StringBuilder(url+"?");
+    private String addParams(String url, HashMap<String, String> mapParam){
+            StringBuilder stringBuilder = new StringBuilder(url + "?");
 
-        if(mapParam != null){
-            for ( String key : mapParam.keySet() ) {
-                stringBuilder.append(key+"=");
-                stringBuilder.append(mapParam.get(key)+"&");
+            if (mapParam != null) {
+                for (String key : mapParam.keySet()) {
+                    stringBuilder.append(key + "=");
+                    stringBuilder.append(mapParam.get(key) + "&");
+                }
             }
+            return stringBuilder.toString();
         }
-        return stringBuilder.toString();
-    }
-
 }

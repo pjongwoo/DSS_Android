@@ -22,11 +22,6 @@ public class ListViewAdapter extends BaseAdapter {
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<ListViewItem> arItem;
 
-    private View.OnClickListener telClickListener;
-    private View.OnClickListener mapClickListener;
-
-    // ListViewAdapter의 생성자
-
     private Context context;
     private AQuery aQuery;
 
@@ -38,14 +33,6 @@ public class ListViewAdapter extends BaseAdapter {
 
     public ArrayList<ListViewItem> getArItem() {
         return arItem;
-    }
-
-    public void setTelClickListener(View.OnClickListener telClickListener) {
-        this.telClickListener = telClickListener;
-    }
-
-    public void setMapClickListener(View.OnClickListener mapClickListener) {
-        this.mapClickListener = mapClickListener;
     }
 
 
@@ -69,29 +56,16 @@ public class ListViewAdapter extends BaseAdapter {
 
         ListViewItem item = getItem(position);
 
-        ImageView ivPhoto = (ImageView)convertView.findViewById(R.id.ivPhoto);
         TextView tvTitle = (TextView)convertView.findViewById(R.id.tvTitle);
         TextView tvAdress = (TextView)convertView.findViewById(R.id.tvAdress);
         TextView tvTel = (TextView)convertView.findViewById(R.id.tvTel);
-        Button btnMap = (Button)convertView.findViewById(R.id.btnMap);
-        Button btnTel = (Button)convertView.findViewById(R.id.btnTel);
 
-        aQuery.id(ivPhoto).image(item.getFirstimage(), true, false);
-        tvTitle.setText(item.getTitle());
-        tvAdress.setText(item.getAddress());
-        tvTel.setText(item.getTel());
+       // aQuery.id(ivPhoto).image(item.getFirstimage(), true, false);
+        tvTitle.setText(item.getItmNm());
+        tvAdress.setText(item.getGnlNmCd());
+        tvTel.setText(item.getMnfEntpNm());
 
-        btnTel.setTag(position);
-        if(telClickListener != null){
-            btnTel.setOnClickListener(telClickListener);
-        }
 
-        btnMap.setTag(position);
-        if(mapClickListener!= null){
-            btnMap.setOnClickListener(mapClickListener);
-        }
-
-        Log.i("Hongjun","123");
         return convertView;
     }
 
@@ -109,3 +83,4 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
 }
+

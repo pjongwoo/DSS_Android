@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -35,7 +36,8 @@ public class fragment3 extends Fragment {
 
     ListViewStoreAdpter adapter;
     EditText editText;
-    public static final int sub = 1001; /*다른 액티비티를 띄우기 위한 요청코드(상수)*/
+
+
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment3, null);
@@ -53,7 +55,7 @@ public class fragment3 extends Fragment {
                 loadData2(DrugStore);
             }
         });
-        adapter = new ListViewStoreAdpter (this.getActivity());
+        adapter = new ListViewStoreAdpter(this.getActivity());
         adapter.setTelClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,16 +70,16 @@ public class fragment3 extends Fragment {
             @Override
             public void onClick(View v) {
                 ListViewStoreItem item = adapter.getItem((Integer) v.getTag());
-               // Uri gmmIntentUri = Uri.parse("geo:" + item.getWgs84Lat() + "," + item.getWgs84Lon());
+                // Uri gmmIntentUri = Uri.parse("geo:" + item.getWgs84Lat() + "," + item.getWgs84Lon());
                 //Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                 //mapIntent.setPackage("com.google.android.apps.maps");
                 //startActivity(mapIntent);
-                Intent intent = new Intent(getActivity(),fragment4.class);
+                Intent intent = new Intent(getActivity(), fragment4.class);
 
-                intent.putExtra("layx",item.getWgs84Lat());
-                intent.putExtra("layy",item.getWgs84Lon());
-                intent.putExtra("Seach",editText.getText().toString());
-                intent.putExtra("dutyName",item.getDutyName());
+                intent.putExtra("layx", item.getWgs84Lat());
+                intent.putExtra("layy", item.getWgs84Lon());
+                intent.putExtra("Seach", editText.getText().toString());
+                intent.putExtra("dutyName", item.getDutyName());
                 startActivity(intent);//액티비티 띄우기
             }
         });

@@ -42,6 +42,9 @@
             android:layout_height="wrap_content"
             android:text="약국검색"/>
 
+
+
+
     </LinearLayout>
 
 </RelativeLayout>

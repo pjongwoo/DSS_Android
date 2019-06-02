@@ -17,7 +17,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class fragment4 extends AppCompatActivity implements OnMapReadyCallback {
 
     private MapView mapView = null;
-    double x ;
+    double x;
     double y;
     String Seach;
     String StoreName;
@@ -27,15 +27,15 @@ public class fragment4 extends AppCompatActivity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment2);
 
-        Intent Intent=getIntent();
+        Intent Intent = getIntent();
         x = Intent.getExtras().getDouble("layx");
-        y=  Intent.getExtras().getDouble("layy");
+        y = Intent.getExtras().getDouble("layy");
         Seach = Intent.getExtras().getString("Seach");
         StoreName = Intent.getExtras().getString("dutyName");
 
 
         FragmentManager fragmentManager = getFragmentManager();
-        MapFragment mapFragment = (MapFragment)fragmentManager
+        MapFragment mapFragment = (MapFragment) fragmentManager
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
