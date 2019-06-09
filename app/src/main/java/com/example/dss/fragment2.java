@@ -41,10 +41,13 @@ public class fragment2 extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
     private double X;
     private double Y;
+
+    ArrayList<ListDrugStore> DrugStore = new ArrayList<ListDrugStore>();
+    LocationManager lm;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+         lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         if ( Build.VERSION.SDK_INT >= 23 &&
                 ContextCompat.checkSelfPermission( getActivity().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
@@ -68,8 +71,8 @@ public class fragment2 extends Fragment implements OnMapReadyCallback {
 
             X=longitude;
             Y=latitude;
-
-            loadData(X,Y);
+            //API 호출
+            loadData();
 
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                     1000,
@@ -94,8 +97,6 @@ public class fragment2 extends Fragment implements OnMapReadyCallback {
             Y=latitude;
         }
 
-
-
         public void onStatusChanged(String provider, int status, Bundle extras) {
         }
 
@@ -106,10 +107,11 @@ public class fragment2 extends Fragment implements OnMapReadyCallback {
         }
     };
 
-    private void loadData(Double x,Double y) {
+    private void loadData() {
         AQuery aq = new AQuery(getActivity());
 
-        String url = "http://211.239.124.237:19613/store/location/"+x +"/" +y ;
+        //String url = "http://211.239.124.237:19613/store/location/126.8655206/37.500246";
+        String url = "http://211.239.124.237:19613/store/address/서울/구로";
 
         aq.ajax(url, String.class, new AjaxCallback<String>() {
             @Override
@@ -117,10 +119,22 @@ public class fragment2 extends Fragment implements OnMapReadyCallback {
                 Log.i ("url",url);
                 if (resutl != null) {
                     //sucess
-                    Log.i("test", resutl.toString());
+
                     try {
                         JSONArray jsonArray = new JSONArray(resutl);
+                        Log.i("jsonArray",jsonArray.toString());
 
+                        for (int i=0; i < jsonArray.length(); i++){
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                            ListDrugStore item = new ListDrugStore();
+                            item.setX(jsonObject.getDouble("wgs84Lon"));
+                            item.setY(jsonObject.getDouble("wgs84Lat"));
+                            item.setDutyName(jsonObject.getString("dutyName"));
+
+                            DrugStore.add(item);
+
+                        }
                     }
                     catch (Exception e){
                         Toast.makeText(getActivity(), "JSON Parsing 오류 발생", Toast.LENGTH_SHORT).show();
@@ -200,21 +214,22 @@ public class fragment2 extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng SEOUL = new LatLng(Y, X);
 
+        LatLng Drug_instance = new LatLng(37.500246 ,126.8655206);
+        String val = Integer.toString(DrugStore.size());
 
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(SEOUL);
-        markerOptions.title("서울");
-        markerOptions.snippet("수도");
+        for (int i=0 ;i<DrugStore.size(); i++){
+            MarkerOptions makerOptions = new MarkerOptions();
+            makerOptions // LatLng에 대한 어레이를 만들어서 이용할 수도 있다.
+                    .position(new LatLng(DrugStore.get(i).getY(), DrugStore.get(i).getX()))
+                    .title( DrugStore.get(i).getDutyName()); // 타이틀.
 
-        googleMap.addMarker(markerOptions);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(SEOUL));
+            // 2. 마커 생성 (마커를 나타냄)
+            googleMap.addMarker(makerOptions);
+        }
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(Drug_instance));
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
-
     }
-
-
-
 }

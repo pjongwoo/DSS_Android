@@ -1,6 +1,7 @@
 package com.example.dss;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -45,6 +46,13 @@ public class fragment1 extends Fragment {
             }
         });
         adapter = new ListViewAdapter(this.getActivity());
+        adapter.ShowClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Activity root = getActivity(); //이 클래스가 프레그먼트이기 때문에 액티비티 정보를 얻는다.
+                Toast.makeText(root, "test", Toast.LENGTH_SHORT).show();
+            }
+        });
         listview.setAdapter(adapter);
         return  view;
 

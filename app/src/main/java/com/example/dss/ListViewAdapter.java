@@ -25,6 +25,8 @@ public class ListViewAdapter extends BaseAdapter {
     private Context context;
     private AQuery aQuery;
 
+    private View.OnClickListener ShowClickListener;
+
     public ListViewAdapter(Context context) {
         this.arItem = new ArrayList<>();
         this.context = context;
@@ -35,7 +37,9 @@ public class ListViewAdapter extends BaseAdapter {
         return arItem;
     }
 
-
+    public void ShowClickListener(View.OnClickListener ShowClickListener) {
+        this.ShowClickListener = ShowClickListener;
+    }
     // Adapter에 사용되는 데이터의 개수를 리턴. : 필수 구현
     @Override
     public int getCount() {
@@ -60,12 +64,18 @@ public class ListViewAdapter extends BaseAdapter {
         TextView tvAdress = (TextView)convertView.findViewById(R.id.tvAdress);
         TextView tvTel = (TextView)convertView.findViewById(R.id.tvTel);
         ImageView ivPhoto = (ImageView)convertView.findViewById(R.id.ivPhoto);
+        Button btnShow = (Button)convertView.findViewById(R.id.btnShow);
 
         aQuery.id(ivPhoto).image(item.getBig_image(), true, true);
         tvTitle.setText(item.getName());
         tvAdress.setText(item.getCompany_name());
         tvTel.setText(item.getDiv_name());
 
+
+        btnShow.setTag(position);
+        if(ShowClickListener != null){
+            btnShow.setOnClickListener(ShowClickListener);
+        }
 
         return convertView;
     }
