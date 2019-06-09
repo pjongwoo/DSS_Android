@@ -11,22 +11,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class fragment1 extends Fragment {
 
-
     ListViewAdapter adapter;
     EditText editText;
+
+    static final String ImageUrl = "http://211.239.124.237:19609/resources/big_image/";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,39 +52,35 @@ public class fragment1 extends Fragment {
     private void loadData(String Drug) {
         AQuery aq = new AQuery(getActivity());
 
-        HashMap<String, String> params = new HashMap<>();
-        params.put("ServiceKey","231va86s8mqm2NVC5V5e3wWxtfRh5%2B1dBBBB2ZJb3E6DoeRzJPv3Kk19IYcZmBUyDez8LoibDglwKyWa3VC0Yg%3D%3D");
-        params.put("numOfRows","10");
-        params.put("pageNo","1");
-        params.put("itmNm",Drug);
-        params.put("_type","json");
+        String url = "http://211.239.124.237:19613/drug/findName/"+Drug;
+        //String url = "http://211.239.124.237:19613/drug/findName/타이";
 
-        String url = "http://apis.data.go.kr/B551182/dgamtCrtrInfoService/getDgamtList";
-        url = addParams(url, params);
-
-        aq.ajax(url, JSONObject.class, new AjaxCallback<JSONObject>() {
+        aq.ajax(url, String.class, new AjaxCallback<String>() {
             @Override
-            public void callback(String url, JSONObject resutl, AjaxStatus status) {
+            public void callback(String url, String resutl, AjaxStatus status) {
                 Log.i ("url",url);
                 if (resutl != null) {
                     //sucess
                     Log.i("test", resutl.toString());
-
                     try {
-                        JSONArray jar = resutl.optJSONObject("response").optJSONObject("body").optJSONObject("items").optJSONArray("item");
+                        JSONArray jsonArray = new JSONArray(resutl);
+                        ArrayList<ListViewItemApi> arItem = new ArrayList<ListViewItemApi>();
 
-                        ArrayList<ListViewItem> arItem = new ArrayList<ListViewItem>();
-                        for(int i=0; i<jar.length(); i++){
-                            JSONObject jobj = jar.optJSONObject(i);
+                        for (int i=0; i < jsonArray.length(); i++){
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                            ListViewItem item = new ListViewItem();
-                            item.setItmNm(jobj.optString("itmNm"));
-                            item.setMnfEntpNm(jobj.optString("mnfEntpNm"));
-                            item.setGnlNmCd(jobj.optString("GnlNmCd"));
+                            String str = jsonObject.getString("big_image");
+                            String[] array = str.split("/");
+                            String newurl = ImageUrl + array[6] + ".jpg";
+
+                            ListViewItemApi item = new ListViewItemApi();
+                            item.setName(jsonObject.getString("name"));
+                            item.setCompany_name(jsonObject.getString("company_name"));
+                            item.setDiv_name(jsonObject.getString("div_name"));
+                            item.setBig_image(newurl);
 
                             arItem.add(item);
                         }
-
                         if(arItem.size()>0){
                             adapter.getArItem().addAll(arItem);
                             adapter.notifyDataSetChanged();
@@ -103,16 +96,4 @@ public class fragment1 extends Fragment {
             }
         }.timeout(20000));
     }
-
-    private String addParams(String url, HashMap<String, String> mapParam){
-            StringBuilder stringBuilder = new StringBuilder(url + "?");
-
-            if (mapParam != null) {
-                for (String key : mapParam.keySet()) {
-                    stringBuilder.append(key + "=");
-                    stringBuilder.append(mapParam.get(key) + "&");
-                }
-            }
-            return stringBuilder.toString();
-        }
 }

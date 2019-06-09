@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class ListViewAdapter extends BaseAdapter {
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
-    private ArrayList<ListViewItem> arItem;
+    private ArrayList<ListViewItemApi> arItem;
 
     private Context context;
     private AQuery aQuery;
@@ -31,7 +31,7 @@ public class ListViewAdapter extends BaseAdapter {
         aQuery = new AQuery(context);
     }
 
-    public ArrayList<ListViewItem> getArItem() {
+    public ArrayList<ListViewItemApi> getArItem() {
         return arItem;
     }
 
@@ -54,16 +54,17 @@ public class ListViewAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.row, parent, false);
         }
 
-        ListViewItem item = getItem(position);
+        ListViewItemApi item = getItem(position);
 
         TextView tvTitle = (TextView)convertView.findViewById(R.id.tvTitle);
         TextView tvAdress = (TextView)convertView.findViewById(R.id.tvAdress);
         TextView tvTel = (TextView)convertView.findViewById(R.id.tvTel);
+        ImageView ivPhoto = (ImageView)convertView.findViewById(R.id.ivPhoto);
 
-       // aQuery.id(ivPhoto).image(item.getFirstimage(), true, false);
-        tvTitle.setText(item.getItmNm());
-        tvAdress.setText(item.getGnlNmCd());
-        tvTel.setText(item.getMnfEntpNm());
+        aQuery.id(ivPhoto).image(item.getBig_image(), true, true);
+        tvTitle.setText(item.getName());
+        tvAdress.setText(item.getCompany_name());
+        tvTel.setText(item.getDiv_name());
 
 
         return convertView;
@@ -77,7 +78,7 @@ public class ListViewAdapter extends BaseAdapter {
 
     // 지정한 위치(position)에 있는 데이터 리턴 : 필수 구현
     @Override
-    public ListViewItem getItem(int position) {
+    public ListViewItemApi getItem(int position) {
 
         return arItem.get(position) ;
     }
