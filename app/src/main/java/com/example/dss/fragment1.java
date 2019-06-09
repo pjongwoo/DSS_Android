@@ -49,8 +49,15 @@ public class fragment1 extends Fragment {
         adapter.ShowClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Activity root = getActivity(); //이 클래스가 프레그먼트이기 때문에 액티비티 정보를 얻는다.
-                Toast.makeText(root, "test", Toast.LENGTH_SHORT).show();
+
+                ListViewItemApi item = adapter.getItem((Integer) v.getTag());
+                Intent intent = new Intent(getActivity(), fragment5.class);
+
+                intent.putExtra("ingredient_detail", item.getIngredient_detail());
+                intent.putExtra("validity", item.getValidity());
+                intent.putExtra("manufacturing", item.getManufacturing());
+                intent.putExtra("usage", item.getUsage());
+                startActivity(intent);//액티비티 띄우기
             }
         });
         listview.setAdapter(adapter);
@@ -85,6 +92,12 @@ public class fragment1 extends Fragment {
                             item.setName(jsonObject.getString("name"));
                             item.setCompany_name(jsonObject.getString("company_name"));
                             item.setDiv_name(jsonObject.getString("div_name"));
+
+                            item.setIngredient_detail(jsonObject.getString("ingredient_detail"));
+                            item.setUsage(jsonObject.getString("usage"));
+                            item.setValidity(jsonObject.getString("validity"));
+                            item.setManufacturing(jsonObject.getString("manufacturing"));
+
                             item.setBig_image(newurl);
 
                             arItem.add(item);

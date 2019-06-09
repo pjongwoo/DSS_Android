@@ -1,11 +1,40 @@
 package com.example.dss;
 
 public class ListViewItemApi {
-    String ingredient_detail;
+
     String company_name;
     String div_name;
     String big_image;
     String name;
+
+    String validity; //유호기간
+    String ingredient_detail; //약성분
+    String manufacturing; // 효능
+    String usage;// 주의사항
+
+    public String getValidity() {
+        return validity;
+    }
+
+    public void setValidity(String validity) {
+        this.validity = validity;
+    }
+
+    public String getManufacturing() {
+        return manufacturing;
+    }
+
+    public void setManufacturing(String manufacturing) {
+        this.manufacturing = manufacturing;
+    }
+
+    public String getUsage() {
+        return usage;
+    }
+
+    public void setUsage(String usage) {
+        this.usage = usage;
+    }
 
     public String getIngredient_detail() {
         return ingredient_detail;
