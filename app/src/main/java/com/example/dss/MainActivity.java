@@ -1,24 +1,20 @@
 package com.example.dss;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Toast;
+import android.support.design.widget.NavigationView;
 
-import com.androidquery.AQuery;
-import com.androidquery.callback.AjaxCallback;
-import com.androidquery.callback.AjaxStatus;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
-
-public class MainActivity extends AppCompatActivity  implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
 
     private final int FRAGMENT1 = 1;
     private final int FRAGMENT2 = 2;
@@ -26,10 +22,10 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
     private Button bt_tab1, bt_tab2,bt_tab3;
 
-    private ListViewItem data;
-
-    ListViewAdapter adapter;
-
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    ActionBarDrawerToggle drawerToggle;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,36 +37,73 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         bt_tab2 = (Button)findViewById(R.id.bt_tab2);
         bt_tab3 = (Button)findViewById(R.id.bt_tab3);
 
-        // 탭 버튼에 대한 리스너 연결
-        bt_tab1.setOnClickListener(this);
-        bt_tab2.setOnClickListener(this);
-        bt_tab3.setOnClickListener(this);
+        // 위젯에 대한 참조
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("DSS");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //네비게이션 메뉴 생성
+        drawerLayout = (DrawerLayout) findViewById(R.id.dl_main_drawer_root);
+        navigationView = (NavigationView) findViewById(R.id.nv_main_navigation_root);
+        drawerToggle = new ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                toolbar,
+                R.string.drawer_open,
+                R.string.drawer_close
+        );
+        navigationView.setNavigationItemSelectedListener(this);
+
+        //약 검색
+        bt_tab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+                public void onClick(View v) {
+                 callFragment(FRAGMENT1);
+                }
+        });
+        //내위치 검색
+        bt_tab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callFragment(FRAGMENT2);
+            }
+        });
+        //약국검색
+        bt_tab3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callFragment(FRAGMENT3);
+            }
+        });
         callFragment(FRAGMENT1);
     }
 
+    //네비게이션 이벤트 함수
     @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.bt_tab1 :
-                // '버튼1' 클릭 시 '프래그먼트1' 호출
-                callFragment(FRAGMENT1);
-                break;
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.item1:
+                Intent intent = new Intent(MainActivity.this, fragment6.class);
 
-            case R.id.bt_tab2 :
-                // '버튼2' 클릭 시 '프래그먼트2' 호출
-                callFragment(FRAGMENT2);
+                startActivity(intent);//액티비티 띄우기
                 break;
-            case R.id.bt_tab3 :
-                // '버튼2' 클릭 시 '프래그먼트2' 호출
-                callFragment(FRAGMENT3);
+            case R.id.item2:
+                Toast.makeText(this, "item2 clicked..", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.item3:
+
+                Toast.makeText(this, "item3 clicked..", Toast.LENGTH_SHORT).show();
                 break;
         }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
+    //프래그먼트 이동 함수
     private void callFragment(int frament_no){
-
-        // 프래그먼트 사용을 위해
+        // 프래그먼트 사용
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         switch (frament_no){
@@ -93,9 +126,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                 fragment3 fragment3 = new fragment3();
                 transaction.replace(R.id.fragment_container, fragment3);
                 transaction.commit();
-
                 break;
         }
     }
-
 }

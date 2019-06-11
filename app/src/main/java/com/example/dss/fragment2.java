@@ -47,7 +47,7 @@ public class fragment2 extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         if ( Build.VERSION.SDK_INT >= 23 &&
                 ContextCompat.checkSelfPermission( getActivity().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
@@ -56,22 +56,22 @@ public class fragment2 extends Fragment implements OnMapReadyCallback {
         }
         else{
             Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            String provider = location.getProvider();
-            double longitude = location.getLongitude();
-            double latitude = location.getLatitude();
-            double altitude = location.getAltitude();
+            //  String provider = location.getProvider();
+            //   double longitude = location.getLongitude();
+            //    double latitude = location.getLatitude();
+            //    double altitude = location.getAltitude();
 
-            String tmp = Double.toString(longitude);
-            String tmp2 = Double.toString(latitude);
-            String tmp3 = Double.toString(altitude);
+            //    String tmp = Double.toString(longitude);
+            //    String tmp2 = Double.toString(latitude);
+            //     String tmp3 = Double.toString(altitude);
 
-            Log.i("tmp1",tmp);
-            Log.i("tmp2",tmp2);
-            Log.i("tmp3",tmp3);
+            //   Log.i("tmp1",tmp);
+           //  Log.i("tmp2",tmp2);
+           //   Log.i("tmp3",tmp3);
 
-            X=longitude;
-            Y=latitude;
-            //API 호출
+           //   X=longitude;
+           //   Y=latitude;
+            //  API 호출
             loadData();
 
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,

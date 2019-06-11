@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/item1"
+        android:icon="@mipmap/ic_launcher_round"
+        android:title="건강Tip"
+        />
+
+    <item
+        android:id="@+id/item2"
+        android:icon="@mipmap/ic_launcher_round"
+        android:title="공지사항"
+        />
+
+    <item
+        android:id="@+id/item3"
+        android:icon="@mipmap/ic_launcher_round"
+        android:title="FAQ"
+        />
+
+</menu>
+
