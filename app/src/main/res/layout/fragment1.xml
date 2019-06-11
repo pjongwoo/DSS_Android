@@ -9,6 +9,20 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
+        <CheckBox
+            android:id="@+id/checkBox1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="이름검색" />
+
+        <CheckBox
+            android:id="@+id/checkBox2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="약ID검색" />
+
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
