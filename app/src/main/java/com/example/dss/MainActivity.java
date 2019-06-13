@@ -1,7 +1,10 @@
 package com.example.dss;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,28 +17,46 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.support.design.widget.NavigationView;
 
-public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private final int FRAGMENT1 = 1;
     private final int FRAGMENT2 = 2;
-    private final int FRAGMENT3= 3;
+    private final int FRAGMENT3 = 3;
+    private final int FRAGMENT4 = 4;
+    private final int FRAGMENT5 = 5;
 
-    private Button bt_tab1, bt_tab2,bt_tab3;
+    private Button bt_tab1, bt_tab2,bt_tab3, bt_tab4, bt_tab5;
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
     Toolbar toolbar;
 
+    private SharedPreferences appData;
+
+    public boolean saveLoginData;
+    public String idText;
+    public String nickname;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        load();
+
         // 위젯에 대한 참조
         bt_tab1 = (Button)findViewById(R.id.bt_tab1);
         bt_tab2 = (Button)findViewById(R.id.bt_tab2);
         bt_tab3 = (Button)findViewById(R.id.bt_tab3);
+        bt_tab4 = (Button) findViewById(R.id.bt_tab4);
+        bt_tab5 = (Button) findViewById(R.id.bt_tab5);
+        if(saveLoginData != true) {
+
+        }else{
+
+        }
+
 
         // 위젯에 대한 참조
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -76,6 +97,20 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 callFragment(FRAGMENT3);
             }
         });
+        //로그인
+        bt_tab4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callFragment(FRAGMENT4);
+            }
+        });
+        //내정보
+        bt_tab5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callFragment(FRAGMENT5);
+            }
+        });
         callFragment(FRAGMENT1);
     }
 
@@ -99,6 +134,24 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        System.out.println("resultCode" + resultCode);
+        if(resultCode == RESULT_OK){
+            appData = getSharedPreferences("appData", MODE_PRIVATE);
+            load();
+            String DSS_ID = data.getStringExtra("DSS_ID");
+            String nickname = data.getStringExtra("nickname");
+            save(true, DSS_ID, nickname);
+            Toast.makeText(getApplicationContext(), "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+        }else if(resultCode == RESULT_CANCELED){
+
+        }
+        //super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     //프래그먼트 이동 함수
@@ -127,6 +180,42 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 transaction.replace(R.id.fragment_container, fragment3);
                 transaction.commit();
                 break;
+
+            case 4:
+                // '프래그먼트 로그인' 호출
+                fragment_login fragment_login = new fragment_login();
+                transaction.replace(R.id.fragment_container, fragment_login);
+                transaction.commit();
+
+                break;
+            case 5:
+                // '프래그먼트 로그인' 호출
+                fragment_mypage fragment_mypage = new fragment_mypage();
+                transaction.replace(R.id.fragment_container, fragment_mypage);
+                transaction.commit();
+
+                break;
         }
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
+    private void save(Boolean isLogin, String id, String nickname) {
+        SharedPreferences.Editor editor = appData.edit();
+
+        editor.putBoolean("SAVE_LOGIN_DATA", isLogin);
+        editor.putString("ID", id.trim());
+        editor.putString("nickname", nickname.trim());
+
+        // apply, commit 을 안하면 변경된 내용이 저장되지 않음
+        editor.apply();
+    }
+
+    private void load() {
+        saveLoginData = appData.getBoolean("SAVE_LOGIN_DATA", false);
+        idText = appData.getString("ID", "");
+        nickname = appData.getString("nickname", "");
+    }
 }
+
+
+
