@@ -10,11 +10,20 @@
     >
 
     <Button
-        android:id="@+id/loginBtn1"
-        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="처방전등록"/>
+        android:textSize="20dp"
+        android:text="처방전 등록하기"
+        android:id="@+id/btn_insertPre"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="로그아웃"
+        android:id="@+id/btn_logout"
+        />
 
     <ListView
         android:id="@+id/listview"

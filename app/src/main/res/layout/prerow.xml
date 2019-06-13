@@ -3,7 +3,6 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="120dp">
 
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -13,12 +12,12 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/preHospitalName"
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center_vertical"
-            android:text="Title"
+            android:text="병원명"
             android:textColor="#000000"
             android:textSize="18dp" />
 
@@ -29,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:text="Adress"
+            android:text="제조일자"
             android:textColor="#666666"
             android:textSize="14dp" />
 
@@ -40,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:text="Tel"
+            android:text="투약일/횟수"
             android:textColor="#666666"
             android:textSize="12dp" />
 
@@ -55,19 +54,17 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnMap"
+            android:id="@+id/btnShow"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="지도보기" />
-
-        <Button
-            android:id="@+id/btnTel"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="전화하기" />
+            android:visibility="gone"
+            android:text="상세보기" />
 
 
     </LinearLayout>
+
+
+
 
 </LinearLayout>
 

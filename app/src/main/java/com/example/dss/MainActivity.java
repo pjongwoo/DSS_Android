@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.support.design.widget.NavigationView;
 
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private final int FRAGMENT1 = 1;
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SharedPreferences appData;
 
     public boolean saveLoginData;
-    public String idText;
+    public String id;
     public String nickname;
 
     @Override
@@ -52,12 +54,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         try {
             Intent intent = getIntent();
-            String id = intent.getExtras().getString("id");
-            String nickname = intent.getExtras().getString("nickname");
-            save(true, id, nickname);
-            load();
+            String status = intent.getExtras().getString("status");
+            if(status.equals("login")) {
+                String id = intent.getExtras().getString("id");
+                String nickname = intent.getExtras().getString("nickname");
+                bt_tab4.setVisibility(View.GONE);
+                bt_tab5.setVisibility(View.VISIBLE);
+                appData = getSharedPreferences("appData", MODE_PRIVATE);
+                save(true, id, nickname);
+                load();
+                Toast.makeText(getApplicationContext(), nickname+"님 환영합니다!", Toast.LENGTH_SHORT).show();
+            }else if(status.equals("logout")){
+                bt_tab4.setVisibility(View.VISIBLE);
+                bt_tab5.setVisibility(View.GONE);
+                Toast.makeText(getApplicationContext(), "로그아웃 되었습니다!", Toast.LENGTH_SHORT).show();
+            }
         }catch (Exception e){
-
+            bt_tab4.setVisibility(View.VISIBLE);
+            bt_tab5.setVisibility(View.GONE);
         }
 
 
@@ -134,7 +148,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(this, "item3 clicked..", Toast.LENGTH_SHORT).show();
                 break;
         }
-
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -194,6 +207,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case 5:
                 // '프래그먼트 로그인' 호출
                 fragment_mypage fragment_mypage = new fragment_mypage();
+                Bundle bundle = new Bundle();
+                bundle.putString("id", id);
+                bundle.putString("nickname", nickname);
+                fragment_mypage.setArguments(bundle);
                 transaction.replace(R.id.fragment_container, fragment_mypage);
                 transaction.commit();
 
@@ -201,12 +218,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private void save(Boolean isLogin, String id, String nickname) {
         SharedPreferences.Editor editor = appData.edit();
 
-        editor.putBoolean("SAVE_LOGIN_DATA", isLogin);
-        editor.putString("ID", id.trim());
+        editor.putBoolean("isLogin", isLogin);
+        editor.putString("id", id.trim());
         editor.putString("nickname", nickname.trim());
 
         // apply, commit 을 안하면 변경된 내용이 저장되지 않음
@@ -214,8 +230,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void load() {
-        saveLoginData = appData.getBoolean("SAVE_LOGIN_DATA", false);
-        idText = appData.getString("ID", "");
+        saveLoginData = appData.getBoolean("isLogin", false);
+        id = appData.getString("id", "");
         nickname = appData.getString("nickname", "");
     }
 }

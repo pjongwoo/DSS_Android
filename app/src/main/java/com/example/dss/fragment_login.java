@@ -50,18 +50,20 @@ public class fragment_login extends Fragment {
                             Log.i("test", result.toString());
                             try {
                                 JSONObject jsonObject = new JSONObject(result);
-                                Toast.makeText(getActivity(), "로그인성공", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getActivity(), MainActivity.class);
+                                intent.putExtra("status", "login");
                                 intent.putExtra("id", (String) new JSONObject(result).get("id"));
                                 intent.putExtra("nickname", (String) new JSONObject(result).get("nickname"));
+
                                 startActivity(intent);
+                                getActivity().finish();
                             }
                             catch (Exception e){
-                                Toast.makeText(getActivity(), "JSON Parsing 오류 발생", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "아이디 혹은 비밀번호가 잘못 입력됐습니다.", Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             //fail
-                            Toast.makeText(getActivity(), "잘못된 요청입니다", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "예기치 못한 오류입니다.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }.timeout(20000));
