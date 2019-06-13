@@ -67,7 +67,7 @@ public class ListViewPreAdapter extends BaseAdapter {
 //        aQuery.id(ivPhoto).image(item.getBig_image(), true, true);
         preHospitalName.setText(item.getHOSPITAL_NAME());
         preCreateDate.setText(item.getCREATE_DATE());
-        preDoses.setText(item.getDOSES_TIME()+"회씩 "+item.getDOSES_DAY()+"일");
+        preDoses.setText(item.getDOSES_TIME()+"회씩 "+item.getDOSES_DAY()+"일 복용");
 
 
 //        btnShow.setTag(position);

@@ -2,10 +2,11 @@ package com.example.dss;
 
 public class ListViewPreItem {
 
-    private String HOSPITAL_NAME;
-    private String DOSES_DAY;
-    private String DOSES_TIME;
-    private String CREATE_DATE;
+    int id;
+    String HOSPITAL_NAME;
+    String DOSES_DAY;
+    String DOSES_TIME;
+    String CREATE_DATE;
 
 
     public String getHOSPITAL_NAME() {
@@ -38,5 +39,13 @@ public class ListViewPreItem {
 
     public void setCREATE_DATE(String CREATE_DATE) {
         this.CREATE_DATE = CREATE_DATE;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
