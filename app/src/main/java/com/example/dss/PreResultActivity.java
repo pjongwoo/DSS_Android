@@ -27,6 +27,7 @@ public class PreResultActivity extends AppCompatActivity {
     String hospital, createDate, doses_day, doses_time, id, nickname;
     ListViewAdapter adapter;
     ListView listview;
+    Button btn_back;
     static final String ImageUrl = "http://211.239.124.237:19609/resources/big_image/";
 
     @Override
@@ -74,6 +75,21 @@ public class PreResultActivity extends AppCompatActivity {
         });
         listview.setAdapter(adapter);
 
+        btn_back = (Button)findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+                intent.putExtra("status", "login");
+                intent.putExtra("id", id);
+                intent.putExtra("nickname",nickname);
+
+                startActivity(intent);
+                finish();
+            }
+        });
+
         try {
             loadData();
         } catch (JSONException e) {
@@ -98,7 +114,7 @@ public class PreResultActivity extends AppCompatActivity {
                         JSONArray jsonArray = new JSONArray(result);
                         for (int i=0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            int drug_id = jsonObject.getInt("DRUG_ID");
+                            int drug_id = jsonObject.getJSONObject("drug").getInt("id");
 
                             String url2 = "http://211.239.124.237:19613/drug/findId/" + drug_id;
                             aq2.ajax(url2, JSONObject.class, new AjaxCallback<JSONObject>() {
