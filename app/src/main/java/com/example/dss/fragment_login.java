@@ -51,6 +51,10 @@ public class fragment_login extends Fragment {
                             try {
                                 JSONObject jsonObject = new JSONObject(result);
                                 Toast.makeText(getActivity(), "로그인성공", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getActivity(), MainActivity.class);
+                                intent.putExtra("id", (String) new JSONObject(result).get("id"));
+                                intent.putExtra("nickname", (String) new JSONObject(result).get("nickname"));
+                                startActivity(intent);
                             }
                             catch (Exception e){
                                 Toast.makeText(getActivity(), "JSON Parsing 오류 발생", Toast.LENGTH_SHORT).show();

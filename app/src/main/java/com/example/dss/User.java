@@ -12,9 +12,10 @@ public class User {
     private Timestamp create_date;
     private Timestamp update_date;
 
-    public User(String id, String pwd, String email, String birth) {
+    public User( String id, String pwd, String nickname, String email, String birth) {
         this.id = id;
         this.password = pwd;
+        this.nickname = nickname;
         this.email = email;
         this.birth = birth;
     }

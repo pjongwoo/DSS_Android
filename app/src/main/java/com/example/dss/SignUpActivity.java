@@ -20,8 +20,8 @@ import java.util.HashMap;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    EditText regId, regPwd, regRePwd, regEmail1, regEmail2, regBirth;
-    String id, pwd, repwd, email, birth;
+    EditText regId, regPwd, regRePwd, regNickname, regEmail1, regEmail2, regBirth;
+    String id, pwd, repwd, nickname, email, birth;
     ListViewAdapter adapter;
 
     @Override
@@ -35,6 +35,7 @@ public class SignUpActivity extends AppCompatActivity {
         regId =  (EditText)findViewById(R.id.regId);
         regPwd =  (EditText)findViewById(R.id.regPwd);
         regRePwd =  (EditText)findViewById(R.id.regRePwd);
+        regNickname =  (EditText)findViewById(R.id.regNickname);
         regEmail1 =  (EditText)findViewById(R.id.regEmail1);
         regEmail2 =  (EditText)findViewById(R.id.regEmail2);
         regBirth =  (EditText)findViewById(R.id.regBirth);
@@ -42,14 +43,21 @@ public class SignUpActivity extends AppCompatActivity {
         id = regId.getText().toString();
         pwd = regPwd.getText().toString();
         repwd = regRePwd.getText().toString();
+        nickname = regNickname.getText().toString();
         email = regEmail1.getText().toString()+"@"+regEmail2.getText().toString();
         birth = regBirth.getText().toString();
 
+        if(!pwd.equals(repwd)){
+            Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         AQuery aq = new AQuery(this);
-        User user = new User(id, pwd, email, birth);
+        User user = new User(id, pwd, nickname, email, birth);
         HashMap<String, String> params = new HashMap<>();
         params.put("id",id);
         params.put("password",pwd);
+        params.put("nickname",nickname);
         params.put("email",email);
         params.put("birth",birth);
 

@@ -43,17 +43,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        load();
-
         // 위젯에 대한 참조
         bt_tab1 = (Button)findViewById(R.id.bt_tab1);
         bt_tab2 = (Button)findViewById(R.id.bt_tab2);
         bt_tab3 = (Button)findViewById(R.id.bt_tab3);
         bt_tab4 = (Button) findViewById(R.id.bt_tab4);
         bt_tab5 = (Button) findViewById(R.id.bt_tab5);
-        if(saveLoginData != true) {
 
-        }else{
+        try {
+            Intent intent = getIntent();
+            String id = intent.getExtras().getString("id");
+            String nickname = intent.getExtras().getString("nickname");
+            save(true, id, nickname);
+            load();
+        }catch (Exception e){
 
         }
 
