@@ -38,15 +38,19 @@ import java.util.ArrayList;
 public class fragment2 extends Fragment implements OnMapReadyCallback {
 
     private MapView mapView = null;
-    private GoogleMap mMap;
+
     private double X;
     private double Y;
 
-    ArrayList<ListDrugStore> DrugStore = new ArrayList<ListDrugStore>();
+    static ArrayList<ListDrugStore> DrugStore = new ArrayList<ListDrugStore>();
     LocationManager lm;
+    GoogleMap mMap;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         if ( Build.VERSION.SDK_INT >= 23 &&
@@ -56,22 +60,14 @@ public class fragment2 extends Fragment implements OnMapReadyCallback {
         }
         else{
             Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            //  String provider = location.getProvider();
-            //   double longitude = location.getLongitude();
-            //    double latitude = location.getLatitude();
-            //    double altitude = location.getAltitude();
+            String provider = location.getProvider();
+            double longitude = location.getLongitude();
+            double latitude = location.getLatitude();
+            double altitude = location.getAltitude();
 
-            //    String tmp = Double.toString(longitude);
-            //    String tmp2 = Double.toString(latitude);
-            //     String tmp3 = Double.toString(altitude);
-
-            //   Log.i("tmp1",tmp);
-           //  Log.i("tmp2",tmp2);
-           //   Log.i("tmp3",tmp3);
-
-           //   X=longitude;
-           //   Y=latitude;
-            //  API 호출
+            X=longitude;
+            Y=latitude;
+            // API 호출
             loadData();
 
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
@@ -109,10 +105,7 @@ public class fragment2 extends Fragment implements OnMapReadyCallback {
 
     private void loadData() {
         AQuery aq = new AQuery(getActivity());
-
-        //String url = "http://211.239.124.237:19613/store/location/126.8655206/37.500246";
-        String url = "http://211.239.124.237:19613/store/address/서울/구로";
-
+        String url = "http://211.239.124.237:19613/store/location/"+X+"/"+Y;
         aq.ajax(url, String.class, new AjaxCallback<String>() {
             @Override
             public void callback(String url, String resutl, AjaxStatus status) {
@@ -126,14 +119,11 @@ public class fragment2 extends Fragment implements OnMapReadyCallback {
 
                         for (int i=0; i < jsonArray.length(); i++){
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
-
                             ListDrugStore item = new ListDrugStore();
                             item.setX(jsonObject.getDouble("wgs84Lon"));
                             item.setY(jsonObject.getDouble("wgs84Lat"));
                             item.setDutyName(jsonObject.getString("dutyName"));
-
                             DrugStore.add(item);
-
                         }
                     }
                     catch (Exception e){
@@ -151,6 +141,7 @@ public class fragment2 extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.location, container, false);
+
 
         mapView = (MapView)layout.findViewById(R.id.map);
         mapView.getMapAsync(this);
@@ -215,8 +206,17 @@ public class fragment2 extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        LatLng Drug_instance = new LatLng(37.500246 ,126.8655206);
-        String val = Integer.toString(DrugStore.size());
+        mMap = googleMap;
+        //지도타입 - 일반
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        oneMarker();
+
+    }
+
+    public void oneMarker() {
+
+        LatLng Drug_instance = new LatLng(X,Y);
+        // Log.i("DrugStore",DrugStore.get(0).getDutyName());
 
         for (int i=0 ;i<DrugStore.size(); i++){
             MarkerOptions makerOptions = new MarkerOptions();
@@ -225,11 +225,11 @@ public class fragment2 extends Fragment implements OnMapReadyCallback {
                     .title( DrugStore.get(i).getDutyName()); // 타이틀.
 
             // 2. 마커 생성 (마커를 나타냄)
-            googleMap.addMarker(makerOptions);
+            mMap.addMarker(makerOptions);
         }
 
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(Drug_instance));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(Drug_instance));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
     }
 }
