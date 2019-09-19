@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "90609209741",
+    "firebase_url": "https://dssandroid-f8faa.firebaseio.com",
+    "project_id": "dssandroid-f8faa",
+    "storage_bucket": "dssandroid-f8faa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90609209741:android:f2be2ebf9a51c17b366dc4",
+        "android_client_info": {
+          "package_name": "com.example.dss"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90609209741-hvj06ke3lvodo9aic5658t55ej09pi8q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSBs_lHgQZzccCH29nl9yzRML68mmkhrk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90609209741-hvj06ke3lvodo9aic5658t55ej09pi8q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

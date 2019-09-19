@@ -27,6 +27,15 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name=".FirebaseInstanceIDService"
+            android:stopWithTask="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+
         <activity android:name=".fragment4" />
         <activity android:name=".fragment5" />
         <activity android:name=".fragment6" />
