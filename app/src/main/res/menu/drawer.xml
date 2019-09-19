@@ -3,19 +3,20 @@
 
     <item
         android:id="@+id/item1"
-        android:icon="@mipmap/ic_launcher_round"
-        android:title="건강Tip"
+        android:icon="@drawable/ic_insert_link_black_24dp"
+        android:title="약검색"
+
         />
 
     <item
         android:id="@+id/item2"
-        android:icon="@mipmap/ic_launcher_round"
-        android:title="공지사항"
+        android:icon="@drawable/ic_place_black_24dp"
+        android:title="약국검색"
         />
 
     <item
         android:id="@+id/item3"
-        android:icon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/ic_help_black_24dp"
         android:title="FAQ"
         />
 

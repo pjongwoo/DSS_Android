@@ -136,12 +136,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
             case R.id.item1:
-                Intent intent = new Intent(MainActivity.this, fragment6.class);
-
-                startActivity(intent);//액티비티 띄우기
+                callFragment(FRAGMENT1);
                 break;
             case R.id.item2:
-                Toast.makeText(this, "item2 clicked..", Toast.LENGTH_SHORT).show();
+                callFragment(FRAGMENT3);
                 break;
             case R.id.item3:
 
