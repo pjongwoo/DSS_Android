@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private final int FRAGMENT3 = 3;
     private final int FRAGMENT4 = 4;
     private final int FRAGMENT5 = 5;
+    private final int FRAGMENT6 = 6;
 
     private Button bt_tab1, bt_tab2,bt_tab3, bt_tab4, bt_tab5;
 
@@ -145,6 +146,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 Toast.makeText(this, "item3 clicked..", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.item4:
+                callFragment(FRAGMENT6);
+                break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
@@ -212,6 +216,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 transaction.replace(R.id.fragment_container, fragment_mypage);
                 transaction.commit();
 
+                break;
+
+            case 6:
+                // '프래그먼트 로그인' 호출
+                fragment7 fragment7 = new fragment7();
+                transaction.replace(R.id.fragment_container, fragment7);
+                transaction.commit();
                 break;
         }
     }

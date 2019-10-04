@@ -24,19 +24,19 @@
             android:visibility="gone"
             android:text="약ID검색" />
 
+
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/sample"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="100dp"
+            android:gravity="center"
             android:textColor="@color/colorText"
             android:textSize="21sp"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="대해 알고 싶으신가요?"
-            android:layout_marginLeft="100dp"
             android:textSize="21sp"/>
 
 
