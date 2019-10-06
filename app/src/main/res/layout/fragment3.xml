@@ -11,29 +11,28 @@
         >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/sample2"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="100dp"
+            android:gravity="center"
             android:textColor="@color/colorText"
+            android:layout_marginTop="30dp"
             android:textSize="21sp"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="약국을 알고 싶으신가요?"
-            android:layout_marginLeft="100dp"
+            android:gravity="center"
             android:textSize="21sp"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edit1"
-            android:hint="입력해주세요"
+            android:hint=""
             />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
             android:background="@color/colorText"
             android:textColor="#fff"
             android:layout_marginTop="20dp"
