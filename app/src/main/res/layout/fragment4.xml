@@ -18,54 +18,115 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/imageView1" />
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="30pt"
+                        android:text=" 약이름 "
+                        android:background="#ced4da"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:padding="10dp"
                         android:textStyle="bold"
-                        android:text="■ 약 이름"/>
+                        android:drawableLeft="@drawable/ic_check_box_black_24dp"
+                       />
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="#333"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="3dp"
                         android:id="@+id/View4" />
-                    <TextView
+                    <View
                         android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#ced4da"/>
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="30pt"
                         android:textStyle="bold"
-                        android:text="■ 성분"/>
+                        android:layout_gravity="center"
+                        android:background="#ced4da"
+                        android:padding="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:text=" 성분"
+                        android:drawableLeft="@drawable/ic_check_box_black_24dp"/>
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="#333"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="3dp"
                         android:id="@+id/View1" />
-                    <TextView
+                    <View
                         android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#ced4da"/>
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="30pt"
                         android:textStyle="bold"
-                        android:text="■ 약 유효 기간"/>
+                        android:background="#ced4da"
+                        android:padding="10dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:text=" 약 유효 기간"
+                        android:drawableLeft="@drawable/ic_check_box_black_24dp"/>
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="#333"
+                        android:layout_marginBottom="3dp"
+                        android:textStyle="bold"
                         android:id="@+id/View2" />
-                    <TextView
+                    <View
                         android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#ced4da"/>
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="30pt"
                         android:textStyle="bold"
-                        android:text="■ 약 효과 효능"/>
+                        android:background="#ced4da"
+                        android:padding="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_gravity="center"
+                        android:text=" 약 효과 효능"
+                        android:drawableLeft="@drawable/ic_check_box_black_24dp"/>
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="#333"
+                        android:layout_marginBottom="3dp"
+                        android:textStyle="bold"
                         android:id="@+id/View3"/>
-                    <TextView
+                    <View
                         android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#ced4da"/>
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="30pt"
                         android:textStyle="bold"
-                        android:text="■ 제조업체 "/>
+                        android:layout_marginTop="5dp"
+                        android:background="#ced4da"
+                        android:padding="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_gravity="center"
+                        android:text="제조업체 "
+                        android:drawableLeft="@drawable/ic_check_box_black_24dp"/>
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="#333"
+                        android:textStyle="bold"
                         android:id="@+id/View5"
                         />
             </LinearLayout>

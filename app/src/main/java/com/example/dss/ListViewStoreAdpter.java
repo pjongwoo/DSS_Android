@@ -1,6 +1,7 @@
 package com.example.dss;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +64,7 @@ public class ListViewStoreAdpter extends BaseAdapter {
         ListViewStoreItem item = getItem(position);
 
         TextView tvTitle = (TextView)convertView.findViewById(R.id.preHospitalName);
-        TextView tvAdress = (TextView)convertView.findViewById(R.id.tvAdress);
+        TextView tvAdress = (TextView)convertView.findViewById(R.id.preCreateDate);
         TextView tvTel = (TextView)convertView.findViewById(R.id.preDoses);
         Button btnMap = (Button)convertView.findViewById(R.id.btnMap);
         Button btnTel = (Button)convertView.findViewById(R.id.btnTel);

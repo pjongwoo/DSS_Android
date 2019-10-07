@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.item3:
 
-                Toast.makeText(this, "item3 clicked..", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "준비중 입니다 ..", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item4:
                 callFragment(FRAGMENT6);
