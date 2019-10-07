@@ -23,4 +23,8 @@ public interface Retrofit2Service {
                                         @Field("regdate") String regdate);
 
 
+    @FormUrlEncoded
+    @POST("dssuser/userCheck")
+    Call<Retrofit2UserModel> userCheck( @Field("email")String drug,
+                                         @Field("pwd") String flag);
 }

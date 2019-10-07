@@ -48,6 +48,8 @@ public class fragment7 extends Fragment {
             .build();
     Retrofit2Service retrofit2Service = retrofit.create(Retrofit2Service.class);
 
+    String user_no;
+    String nickname;
 
     //Fragment 생성
     @Override
@@ -58,6 +60,12 @@ public class fragment7 extends Fragment {
         CalendarView calendar = (CalendarView)view.findViewById(R.id.calendar);
         Button button = (Button)view.findViewById(R.id.but1);
 
+        if(getArguments() != null){
+            user_no = getArguments().getString("User_no");
+            nickname = getArguments().getString("nickname");
+        }
+
+        Log.i("user_no",user_no);
         //회원 약정보 호출
         loadData(getTime);
             //캘린더 이벤트
@@ -90,7 +98,7 @@ public class fragment7 extends Fragment {
     private void loadData(String getTimes) {
         AQuery aq = new AQuery(getActivity());
         String time =  getTimes;
-        String url = "http://3.18.0.46:8080/userdrug/2/"+time;
+        String url = "http://3.18.0.46:8080/userdrug/"+user_no+"/"+time;
 
         aq.ajax(url, String.class, new AjaxCallback<String>() {
             @Override

@@ -41,6 +41,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public String id;
     public String nickname;
 
+    //2019 10.07 최홍준: User_No ,변수 생성
+    public String user_no;
+    Bundle bundle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +63,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if(status.equals("login")) {
                 String id = intent.getExtras().getString("id");
                 String nickname = intent.getExtras().getString("nickname");
+                //User_No 생성
+                user_no = intent.getExtras().getString("id");
+
                 bt_tab4.setVisibility(View.GONE);
                 bt_tab5.setVisibility(View.VISIBLE);
                 appData = getSharedPreferences("appData", MODE_PRIVATE);
@@ -126,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bt_tab5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callFragment(FRAGMENT5);
+                callFragment(FRAGMENT6);
             }
         });
         callFragment(FRAGMENT1);
@@ -209,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case 5:
                 // '프래그먼트 로그인' 호출
                 fragment_mypage fragment_mypage = new fragment_mypage();
-                Bundle bundle = new Bundle();
+                bundle = new Bundle();
                 bundle.putString("id", id);
                 bundle.putString("nickname", nickname);
                 fragment_mypage.setArguments(bundle);
@@ -221,6 +228,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case 6:
                 // '프래그먼트 로그인' 호출
                 fragment7 fragment7 = new fragment7();
+
+                bundle = new Bundle();
+                bundle.putString("User_no", user_no);
+                bundle.putString("nickname", nickname);
+                fragment7.setArguments(bundle);
                 transaction.replace(R.id.fragment_container, fragment7);
                 transaction.commit();
                 break;

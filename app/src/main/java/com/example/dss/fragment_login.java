@@ -17,11 +17,25 @@ import com.androidquery.callback.AjaxStatus;
 
 import org.json.JSONObject;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class fragment_login extends Fragment {
 
     EditText loginId, loginPwd;
     String id, pwd;
     Button login, signUp;
+
+
+    //Retrofit 생성
+    Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl("http://3.18.0.46:8080/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+    Retrofit2Service retrofit2Service = retrofit.create(Retrofit2Service.class);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,6 +44,8 @@ public class fragment_login extends Fragment {
         loginId =  (EditText)view.findViewById(R.id.loginId);
         loginPwd =  (EditText)view.findViewById(R.id.loginPwd);
         login = (Button)view.findViewById(R.id.loginBtn1);
+
+
         login.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -37,36 +53,36 @@ public class fragment_login extends Fragment {
                 pwd = loginPwd.getText().toString();
 
 
-                AQuery aq = new AQuery(getActivity());
+                retrofit2Service.userCheck(id,pwd)
+                        .enqueue(new Callback<Retrofit2UserModel>() {
+                            @Override
+                            public void onResponse(Call<Retrofit2UserModel> call, Response<Retrofit2UserModel> response) {
+                                Log.i("onResponse",response.message());
+                                Log.i("pase",response.toString());
 
-                String url = "http://211.239.124.237:19613/user/userCheck/"+id+"/"+pwd;
 
-                aq.ajax(url, String.class, new AjaxCallback<String>() {
-                    @Override
-                    public void callback(String url, String result, AjaxStatus status) {
-                        Log.i ("url",url);
-                        if (result != null) {
-                            //sucess
-                            Log.i("test", result.toString());
-                            try {
-                                JSONObject jsonObject = new JSONObject(result);
+                                Retrofit2UserModel resulut = response.body();
+
+                                Log.i("plase", resulut.getUser_no().toString());
+                                Log.i("plase", resulut.getPassword());
+                                Log.i("plase", resulut.getEmail());
+
                                 Intent intent = new Intent(getActivity(), MainActivity.class);
                                 intent.putExtra("status", "login");
-                                intent.putExtra("id", (String) new JSONObject(result).get("id"));
-                                intent.putExtra("nickname", (String) new JSONObject(result).get("nickname"));
+                                intent.putExtra("id", resulut.getUser_no().toString());
+                                intent.putExtra("nickname", resulut.getEmail());
 
                                 startActivity(intent);
                                 getActivity().finish();
                             }
-                            catch (Exception e){
+
+                            @Override
+                            public void onFailure(Call<Retrofit2UserModel> call, Throwable t) {
+                                Log.i("onFailure",t.getMessage());
                                 Toast.makeText(getActivity(), "아이디 혹은 비밀번호가 잘못 입력됐습니다.", Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-                            //fail
-                            Toast.makeText(getActivity(), "예기치 못한 오류입니다.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }.timeout(20000));
+                        });
+
             }
         });
 
