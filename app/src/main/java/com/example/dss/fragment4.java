@@ -45,14 +45,17 @@ public class fragment4 extends AppCompatActivity implements OnMapReadyCallback {
 
         LatLng DrugStore = new LatLng(x, y);
 
+        Log.i("x좌표",Double.toString(x));
+        Log.i("x좌표",Double.toString(y));
+
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(DrugStore);
         markerOptions.title("약국명");
         markerOptions.snippet(StoreName);
         map.addMarker(markerOptions);
 
-        map.moveCamera(CameraUpdateFactory.newLatLng(DrugStore));
-        map.animateCamera(CameraUpdateFactory.zoomTo(15));
+        map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(x,y)));
+        map.animateCamera(CameraUpdateFactory.zoomTo(12));
     }
 
 }

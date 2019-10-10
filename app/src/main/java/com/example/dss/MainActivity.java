@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public String user_no;
     Bundle bundle;
 
+    String status;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         try {
             Intent intent = getIntent();
-            String status = intent.getExtras().getString("status");
+            status = intent.getExtras().getString("status");
             if(status.equals("login")) {
                 String id = intent.getExtras().getString("id");
                 String nickname = intent.getExtras().getString("nickname");
@@ -154,8 +155,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(this, "준비중 입니다 ..", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item4:
-                callFragment(FRAGMENT6);
-                break;
+
+                try {
+
+                    if(status.equals("login")) {
+                        Toast.makeText(getApplicationContext(), nickname+"님 스케줄 확인!", Toast.LENGTH_SHORT).show();
+                        callFragment(FRAGMENT6);
+                        break;
+                    }
+                }catch (Exception e){
+                    callFragment(FRAGMENT4);
+                    Toast.makeText(this, "로그인 후 이용 가능합니다.", Toast.LENGTH_SHORT).show();
+                }
+
+
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
