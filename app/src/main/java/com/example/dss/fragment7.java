@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
+import com.google.gson.JsonArray;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.text.SimpleDateFormat;
@@ -44,9 +46,18 @@ public class fragment7 extends Fragment {
     //Retrofit 생성
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("http://3.18.0.46:8080/")
+           // .baseUrl("http://localhost:8080/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
     Retrofit2Service retrofit2Service = retrofit.create(Retrofit2Service.class);
+
+
+    //Retrofit 생성
+    Retrofit retrofit2 = new Retrofit.Builder()
+             .baseUrl("http://61.101.100.125:8080/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+    Retrofit2Service retrofit2Services = retrofit2.create(Retrofit2Service.class);
 
     String user_no;
     String nickname;
@@ -165,11 +176,22 @@ public class fragment7 extends Fragment {
 
                         String DrugText = edittext.getText().toString();
                         Log.i("DrugText",DrugText);
-                        retrofit2Service.postdata(2,DrugText,"false",Show_getTime)
+                        retrofit2Service.postdata(1,DrugText,"false",Show_getTime)
                                 .enqueue(new Callback<Retrofit2TestModel>() {
                                     @Override
                                     public void onResponse(Call<Retrofit2TestModel> call, Response<Retrofit2TestModel> response) {
                                         Log.i("onResponse",response.message());
+                                        retrofit2Services.getSend(DrugText).enqueue(new Callback<Retrofit2Fcm>() {
+                                            @Override
+                                            public void onResponse(Call<Retrofit2Fcm> call, Response<Retrofit2Fcm> response) {
+                                                Log.i("fcmTEST onResponse",response.toString());
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<Retrofit2Fcm> call, Throwable t) {
+                                                Log.i("fcmTEST onFailure",t.getMessage());
+                                            }
+                                        });
                                     }
 
                                     @Override

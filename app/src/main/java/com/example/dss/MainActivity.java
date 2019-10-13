@@ -11,11 +11,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import android.support.design.widget.NavigationView;
+
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONObject;
 
@@ -57,6 +60,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bt_tab3 = (Button)findViewById(R.id.bt_tab3);
         bt_tab4 = (Button) findViewById(R.id.bt_tab4);
         bt_tab5 = (Button) findViewById(R.id.bt_tab5);
+
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Log.d("IDService","device token : "+token);
 
         try {
             Intent intent = getIntent();

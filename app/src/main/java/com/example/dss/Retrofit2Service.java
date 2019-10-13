@@ -11,6 +11,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 
 public interface Retrofit2Service {
@@ -27,4 +28,7 @@ public interface Retrofit2Service {
     @POST("dssuser/userCheck")
     Call<Retrofit2UserModel> userCheck( @Field("email")String drug,
                                          @Field("pwd") String flag);
+
+    @GET("send/")
+    Call<Retrofit2Fcm> getSend(@Query("bodys") String bodys);
 }
